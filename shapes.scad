@@ -13,3 +13,11 @@ module rounded_cube(sx,sy,height,radius) {
   translate([-sx/2+radius,-sy/2+radius,-height/2])
   cylinder(d=2*radius,h=height,$fn=36);
 }
+
+module rounded_square( width, radius_corner ) {
+	translate( [ radius_corner-width/2, radius_corner-width/2, 0 ] )
+		minkowski() {
+			square( width - 2 * radius_corner );
+			circle( radius_corner );
+		}
+}
