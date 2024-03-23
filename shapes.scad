@@ -70,3 +70,22 @@ module sector(h, d, a1, a2) {
         }
     }
 }    
+
+// width(x),depth(y),height(z),thickness(t)
+module box(w,d,h,t)
+{
+	difference()
+	{
+		cube([w,d,h],center=true);
+		translate([0,0,t])
+		cube([w-2*t,d-2*t,h],center=true);
+	}
+}
+
+module tri_prism(w,d,h)
+{
+    rotate([90,0,90])
+    linear_extrude(w)
+    polygon([ [0,0], [0,h], [d,0] ]);
+}
+
