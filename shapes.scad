@@ -22,36 +22,35 @@ module rounded_square( width, radius_corner ) {
 		}
 }
 
-module mounting_corner(offset)
+module mounting_corner(offsetx,offsety,radius=10)
 {
     difference()
     {
-        cylinder(h=20,r1=0,r2=10);
+        cylinder(h=20,r1=0,r2=radius);
         translate([-15,-30,0])
         cube([30,30,30]);
         translate([-30,-15,0])
         cube([30,30,30]);
-        translate([offset,offset,10])
+        translate([offsetx,offsety,10])
             cylinder(d=3,h=12,$fn=24);
     }
 }
 
+module mounting_corners2(dx,dy,offsetx,offsety,radius)
+{
+	for(y=[0,1])
+	mirror([0,y,0])
+	{
+		for(x=[0,1])
+		mirror([x,0,0])
+		translate([-dx/2,-dy/2,-20])
+		mounting_corner(offsetx,offsety,radius);
+	}
+}
+
 module mounting_corners(dx,dy,offset)
 {
-    translate([-dx/2,-dy/2,-20])
-    mounting_corner(offset);
-
-    translate([dx/2,-dy/2,-20])
-    rotate([0,0,90])
-    mounting_corner(offset);
-
-    translate([dx/2,dy/2,-20])
-    rotate([0,0,180])
-    mounting_corner(offset);
-
-    translate([-dx/2,dy/2,-20])
-    rotate([0,0,270])
-    mounting_corner(offset);
+	mounting_corners2(dx,dy,offset,offset,10);
 }
 
 module sector(h, d, a1, a2) {
